@@ -1,0 +1,165 @@
+<div>
+  <form [formGroup]="profileForm" class="align-content-center">
+
+    <mat-card class="my-2">
+      <mat-card-title>
+        User Information
+      </mat-card-title>
+
+      <!--  <mat-expansion-panel-header>
+
+          <mat-panel-title>
+            User Information
+          </mat-panel-title>
+
+          <mat-panel-description>
+            Change your name and photo
+          </mat-panel-description>
+
+        </mat-expansion-panel-header> -->
+      <div class="d-flex flex-row justify-content-center align-content-center">
+
+        <div [matMenuTriggerFor]="photoMenu" class="mb-3"
+          class="cursor-pointer img-thumbnail text-center">
+          <cl-image *ngIf="user?.photo?.publicId" format="jpeg" public-id="{{ user?.photo?.publicId }}" class="fa">
+            <cl-transformation width="120" height="120" crop="thumb">
+            </cl-transformation>
+          </cl-image>
+          <mat-icon *ngIf="!user?.photo?.publicId" style="width: 120px; height: 120px; font-size: 7rem">
+            person
+          </mat-icon>
+
+        </div>
+        <mat-menu #photoMenu="matMenu" yPosition="below" color="accent">
+          <button mat-menu-item (click)="openUploadDialog()">Upload a photo</button>
+          <button mat-menu-item (click)="removePhoto()">Remove photo</button>
+        </mat-menu>
+
+      </div>
+
+      <mat-form-field class="col-12 mt-2">
+
+        <input matInput #name maxlength="50" placeholder="Name" formControlName="name">
+
+        <mat-hint align="end">{{name.value.length}} / 50</mat-hint>
+
+        <mat-error *ngIf="profileForm.get('name').hasError('pattern')">
+          Your name must contain only numbers, letters, ( _ ) and spaces
+        </mat-error>
+
+        <mat-error *ngIf="profileForm.get('name').hasError('maxlength')">
+          Username cannot be more than <strong>50</strong> characters long
+        </mat-error>
+
+      </mat-form-field>
+
+    </mat-card>
+
+    <mat-card class="my-2">
+      <mat-card-title>
+        Contact information
+      </mat-card-title>
+      <!-- <mat-expansion-panel-header>
+          <mat-panel-title>
+            Contact information
+          </mat-panel-title>
+
+          <mat-panel-description>
+            Change youre contact information
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+
+        <mat-form-field class="col-12">
+          <textarea matInput #address maxlength="300" placeholder="Address" formControlName="address"></textarea>
+          <mat-hint align="end">{{address.value.length}} / 300</mat-hint>
+        </mat-form-field> -->
+
+      <div class="row">
+        <div class="col-12">
+          <mat-form-field class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
+
+            <input matInput #city maxlength="28" placeholder="City" formControlName="city">
+
+            <mat-hint align="end">{{city.value.length}} / 28</mat-hint>
+
+            <mat-error *ngIf="profileForm.get('city').hasError('minlength')">
+              City name cannot be more than <strong>28</strong> characters long
+            </mat-error>
+
+            <mat-error *ngIf="profileForm.get('city').hasError('maxlength')">
+              City name cannot be less than <strong>3</strong> characters long
+            </mat-error>
+
+            <mat-error *ngIf="profileForm.get('city').hasError('pattern')">
+              City name must contain only letters
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
+            <input matInput #country maxlength="40" placeholder="Country" formControlName="country">
+
+            <mat-hint align="end">{{country.value.length}} / 40</mat-hint>
+
+            <mat-error *ngIf="profileForm.get('country').hasError('minlength')">
+              Country name cannot be more than <strong>40</strong> characters long
+            </mat-error>
+
+            <mat-error *ngIf="profileForm.get('country').hasError('maxlength')">
+              Country name cannot be less than <strong>3</strong> characters long
+            </mat-error>
+
+            <mat-error *ngIf="profileForm.get('country').hasError('pattern')">
+              Country name must contain only letters
+            </mat-error>
+
+          </mat-form-field>
+
+          <mat-form-field class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
+            <input matInput #postalCode maxlength="5" placeholder="Postal Code" formControlName="postalCode">
+            <mat-hint align="end">{{postalCode.value.length}} / 5</mat-hint>
+            <mat-error *ngIf="profileForm.get('postalCode').hasError('pattern')">
+              postal code must contain only numbers
+            </mat-error>
+            <mat-error *ngIf="profileForm.get('postalCode').hasError('minlength')">
+              postal code must be <strong>5</strong> numbers long
+            </mat-error>
+          </mat-form-field>
+
+        </div>
+      </div>
+    </mat-card>
+
+    <mat-card class="my-2">
+      <mat-card-title>
+        About me
+      </mat-card-title>
+      <!-- <mat-expansion-panel-header>
+
+        <mat-panel-title>
+          About me
+        </mat-panel-title>
+
+        <mat-panel-description>
+          Change your bio
+        </mat-panel-description>
+
+      </mat-expansion-panel-header> -->
+      <mat-form-field class="col-12">
+        <textarea [rows]="4" matInput #bio maxlength="1500" placeholder="Bio" formControlName="bio"></textarea>
+        <mat-hint align="end">{{bio.value.length}} / 1500</mat-hint>
+        <mat-error *ngIf="profileForm.get('bio').hasError('maxlength')">
+          bio cannot be more than <strong>1500</strong> charachters long
+        </mat-error>
+      </mat-form-field>
+    </mat-card>
+
+
+    <div class="text-center">
+      <button mat-raised-button class="my-3" (click)="updateProfile()"
+        [disabled]="!profileForm.dirty || profileForm.invalid">Save</button>
+    </div>
+  </form>
+
+
+
+</div>

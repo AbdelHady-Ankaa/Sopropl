@@ -1,0 +1,15 @@
+<div class="container">
+  <div class="row">
+    <form [formGroup]="createForm">
+      <p>
+        <mat-form-field appearance="outline" class="row container-fluid">
+          <mat-label>Outline form field</mat-label>
+          <input matInput placeholder="Placeholder" class="d-block" formControlName="name" required>
+          <mat-icon matSuffix>folder</mat-icon>
+          <mat-hint>Hint</mat-hint>
+        </mat-form-field>
+      </p>
+      <button mat-button (click)="create()">create</button>
+    </form>
+  </div>
+</div>

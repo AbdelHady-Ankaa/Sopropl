@@ -1,0 +1,21 @@
+<div class="app-container" [class.app-is-mobile]="mobileQuery.matches" [ngClass]="{'dark-theme': isDarkTheme | async}">
+  <app-nav (toggleSideNav)="togglerSideNav($event)" class="app-toolbar"></app-nav>
+  <mat-sidenav-container class="app-sidenav-container" [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
+    <mat-sidenav #sidenav [mode]="mobileQuery.matches ? 'over' : 'side'" [fixedInViewport]="mobileQuery.matches"
+      fixedTopGap="56">
+      <mat-nav-list>
+        <button mat-button (click)="this.alertifyService.warning('warn')"> warn</button>
+        <button mat-button (click)="this.alertifyService.error('error')"> error</button>
+        <button mat-button (click)="this.alertifyService.message('info')"> info</button>
+        <button mat-button (click)="this.alertifyService.success('success')"> success</button>
+
+      </mat-nav-list>
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+      <div class="mat-app-background basic-container pt-4">
+        <router-outlet></router-outlet>
+      </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>

@@ -1,0 +1,37 @@
+<div class="container">
+  <mat-card class="my-4" *ngFor="let item of projects">
+    <mat-card-header>
+      <div mat-card-avater *ngIf="item.logo?.publicId" [clBackgroundImage]="item.logo?.publicId"></div>
+      <mat-card-title>
+        <mat-icon class="mr-2">folder</mat-icon> <strong>{{ item.name }}</strong>
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+
+    </mat-card-content>
+    <mat-card-actions class="d-flex">
+      <button mat-icon-button>
+        <mat-icon>
+          add
+        </mat-icon>
+      </button>
+
+
+      <span class="flex-grow-1"></span>
+      <button mat-icon-button [matMenuTriggerFor]="projMenu">
+        <mat-icon>
+          more_vert
+        </mat-icon>
+      </button>
+      <mat-menu #projMenu="matMenu">
+        <button mat-menu-item [routerLink]="[item.name,'home']">home</button>
+        <button mat-menu-item [routerLink]="[item.name,'graph']">Graph</button>
+        <!-- <button mat-menu-item [routerLink]="['/organizations/', organization?.name, 'projects']"
+          [disabled]="!organization?.name">Projects</button>
+        <button mat-menu-item [routerLink]="['/organizations/', organization?.name, 'teams']"
+          [disabled]="!organization?.name">Teams</button> -->
+        <button mat-menu-item>Help</button>
+      </mat-menu>
+    </mat-card-actions>
+  </mat-card>
+</div>

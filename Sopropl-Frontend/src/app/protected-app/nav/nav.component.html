@@ -1,0 +1,79 @@
+<mat-toolbar class="flex-grow-1">
+
+  <!-- <mat-toolbar-row> -->
+  <button mat-icon-button (click)="togglerSideNav()">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <button mat-button [routerLink]="['/home']">
+    <img class="nav-content-brand img-fluid mx-2" src="../../assets/logo.png" alt="Sopropl">
+  </button>
+  <span class="flex-grow-1"></span>
+  <button mat-button class="mx-2" [matMenuTriggerFor]="addMenu">
+    <mat-icon>
+      add
+    </mat-icon>
+    <mat-icon>
+      arrow_drop_down
+    </mat-icon>
+  </button>
+  <mat-menu #addMenu="matMenu" xPosition="before">
+    <button mat-menu-item routerLink="/new-org">
+      Organization
+    </button>
+    <button mat-menu-item>
+      Project
+    </button>
+    <button mat-menu-item>
+      Member
+    </button>
+
+  </mat-menu>
+  <mat-slide-toggle class="m-2`" [checked]="isDarkTheme | async" (change)="toggleDarkTheme($event.checked)">Dark theme
+  </mat-slide-toggle>
+  <button mat-icon-button [matMenuTriggerFor]="notifMenu" (click)="getNotifications()">
+    <mat-icon matBadge="{{(notificationsLength() | async) !== 0 ? (notificationsLength() | async) : ''}}"
+      matBadgePosition="before" matBadgeSize="small" matBadgeColor="accent">
+      notification_important
+    </mat-icon>
+  </button>
+  <mat-menu #notifMenu="matMenu" xPosition="before">
+
+    <!-- <button *ngFor="let item of notifications | async as list" mat-menu-item>
+      {{ item?.title}}
+    </button> -->
+    <div class="m-2" *ngFor="let item of notis">
+      <div>
+        <small class="text-muted">
+          {{item.title}}
+        </small>
+        <button *ngIf="item?.type == 1" mat-button (click)="acceptInvitation(item.data)">
+          accept
+        </button>
+      </div>
+      <strong>
+        {{item.body}}
+      </strong>
+      <mat-divider></mat-divider>
+    </div>
+  </mat-menu>
+  <button mat-icon-button class="justify-content-center" [matMenuTriggerFor]="userMenu">
+    <cl-image *ngIf="user?.photo?.publicId" class="fa avatar rounded-circle" format="jpeg"
+      public-id="{{ user?.photo?.publicId }}" secure="true">
+      <cl-transformation width="24" height="24" crop="thumb">
+      </cl-transformation>
+    </cl-image>
+
+    <mat-icon *ngIf="!user?.photo?.publicId">person</mat-icon>
+  </button>
+  <mat-menu #userMenu="matMenu" xPosition="before">
+    <button mat-menu-item [routerLink]="['/settings']">
+      <p>Sined in as
+        <strong>{{this.auth.decodedToken.unique_name}}</strong>
+      </p>
+    </button>
+    <button mat-menu-item>Action</button>
+    <button mat-menu-item>Another action</button>
+    <button mat-menu-item (click)="this.logout()">Sign out</button>
+  </mat-menu>
+  <!-- </mat-toolbar-row> -->
+</mat-toolbar>

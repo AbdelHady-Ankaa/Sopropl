@@ -1,0 +1,30 @@
+<input type="file" #file style="display: none" (change)="fileChangeEvent($event)" multiple />
+<h2 mat-dialog-title>Crop your new profile picture</h2>
+<mat-dialog-content class="mat-typography justify-content-center">
+  <div class="list-inline btn-group-sm">
+    <image-cropper [imageChangedEvent]="imageChangedEvent" [maintainAspectRatio]="true" [aspectRatio]="4 / 4"
+      [resizeToWidth]="200" [cropperMinWidth]="200" [onlyScaleDown]="true" [roundCropper]="false" format="png"
+      outputType="base64" (imageCropped)="imageCropped($event)" (imageLoaded)="imageLoaded()"
+      (cropperReady)="cropperReady()" (loadImageFailed)="loadImageFailed()"
+      [style.display]="showCropper ? null : 'none'">
+    </image-cropper>
+  </div>
+  <div class="justify-content-between">
+    <div class="list-inline">
+      <button class="list-inline-item" mat-raised-button color="primary"
+        (click)="addFiles()">
+        Select photo
+      </button>
+      <button class="list-inline-item" mat-raised-button color="primary" (click)="rotateLeft()">Rotate left</button>
+      <button class="list-inline-item" mat-raised-button color="primary" (click)="rotateRight()">Rotate right</button>
+      <button class="list-inline-item" mat-raised-button color="primary" (click)="flipHorizontal()">Flip
+        horizontal</button>
+      <button class="list-inline-item" mat-raised-button color="primary" (click)="flipVertical()">Flip vertical</button>
+    </div>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions class="justify-content-between">
+  <button mat-button mat-dialog-close class="btn btn-danger">Cancel</button>
+  <button mat-button [mat-dialog-close]="true" class="btn btn-success" (click)="uploadPhoto()" cdkFocusInitial>Set new
+    profile picture</button>
+</mat-dialog-actions>

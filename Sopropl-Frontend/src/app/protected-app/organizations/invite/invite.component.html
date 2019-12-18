@@ -1,0 +1,54 @@
+<form [formGroup]="inviteMemebersForm" class="container">
+  <div class="d-flex">
+    <div class="flex-grow-1">
+      <mat-form-field class="d-block">
+        <input matInput #userName type="text" placeholder="Search by username" formControlName="userName"
+          aria-label="Number" [matAutocomplete]="auto" (input)="searchInUsersByUserName($event)">
+        <mat-spinner *ngIf="spinnerService.visibility | async" matSuffix diameter="20"></mat-spinner>
+      </mat-form-field>
+      <mat-autocomplete #auto="matAutocomplete">
+        <mat-option #notExistOption *ngIf="(userName.value.length === 0) ? false : (notExist() | async)"
+          [value]="'notExist'" [disabled]="true">
+          {{ userName.value }} isn't a Sopropl member
+        </mat-option>
+        <mat-option *ngFor="let option of users | async" [value]="option.userName" class="d-flex"
+          (click)="selectedUser = option">
+          <cl-image *ngIf="option?.photo?.publicId" class="rounded auto-complete-option-img" format="jpeg"
+            public-id="{{ option?.photo?.publicId }}" secure="true">
+            <cl-transformation width="24" height="24" crop="thumb">
+            </cl-transformation>
+          </cl-image>
+          <mat-icon *ngIf="!option?.photo?.publicId">person</mat-icon>
+          {{option.userName}}
+          <span class="flex-grow-1"></span>
+          <button mat-icon-button (click)="invite(option)" class="ml-auto">
+            <mat-icon>add</mat-icon>
+          </button>
+        </mat-option>
+      </mat-autocomplete>
+    </div>
+
+    <button mat-button [disabled]="disableInvite() | async" (click)="invite()">
+      Invite
+    </button>
+  </div>
+  <div>
+    <mat-list>
+      <mat-list-item *ngFor="let item of invitedUsers" class="d-flex">
+        <cl-image *ngIf="item?.photo?.publicId" class="rounded auto-complete-option-img" format="jpeg"
+          public-id="{{ item?.photo?.publicId }}" secure="true">
+          <cl-transformation width="24" height="24" crop="thumb">
+          </cl-transformation>
+        </cl-image>
+        <mat-icon *ngIf="!option?.photo?.publicId">person</mat-icon>
+        {{item.userName}}
+
+        <span class="flex-grow-1"></span>
+        <button mat-icon-button (click)="removeInvitedUser(item)">
+          <mat-icon>remove</mat-icon>
+        </button>
+      </mat-list-item>
+    </mat-list>
+  </div>
+  <div>
+    <!-- </form> -->

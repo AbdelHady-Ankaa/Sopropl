@@ -1,0 +1,151 @@
+<div class="container mt-5 pb-5 ">
+  <div class="row justify-content-center">
+    <div class="col-lg-5 col-md-7">
+      <div class="card bg-white shadow border-0">
+        <div class="card-header bg-transparent pb-5">
+          <div class="text-muted text-center mt-2 mb-3"><small>Sign up with</small></div>
+          <div class="btn-group-sm text-center">
+            <a href="javascript:void(0)" class="btn btn-outline-light shadow-sm mx-2 rounded-lg">
+              <span class=""><img src="../assets/img/icons/common/github.svg"></span>
+              <span class="text-dark" style="cursor: pointer">Github</span>
+            </a>
+            <a href="javascript:void(0)" class="btn btn-outline-light shadow-sm mx-2 rounded-lg">
+              <span class=""><img src="../assets/img/icons/common/google.svg"></span>
+              <span class="text-dark" style="cursor: pointer">Google</span>
+            </a>
+          </div>
+        </div>
+        <div class="card-body">
+          <div>
+            <form [formGroup]="registerForm" class="form-group">
+
+              <!-- username -->
+              <div class="form-group mb-2">
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-address-book"></i></span>
+                  </div>
+                  <input class="form-control" type="text" name="userName" id="userName" placeholder="Username"
+                    formControlName="userName"
+                    [ngClass]="{ 'is-invalid': registerForm.get('userName').errors && registerForm.get('userName').touched,'is-valid': !registerForm.get('userName').errors}">
+                </div>
+
+                <div *ngIf="registerForm.get('userName').touched" class="invalid-feedback" style="display: block">
+                  <p *ngIf="registerForm.get('userName').hasError('required')" style="display: block">
+                    Username is required
+                  </p>
+                  <p *ngIf="registerForm.get('userName').hasError('minlength')" style="display: block">
+                    Username must be at least 4 characters long
+                  </p>
+                  <p *ngIf="registerForm.get('userName').hasError('maxlength')" style="display: block">
+                    Username cannot be more than 40 characters long
+                  </p>
+                  <p *ngIf="registerForm.get('userName').hasError('pattern')" style="display: block">
+                    Your username must contain only numbers and letters
+                  </p>
+                </div>
+              </div>
+
+              <!-- email -->
+              <div class="form-group mb-2">
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                  </div>
+                  <input class="form-control" type="email" name="email" id="email" placeholder="Email"
+                    formControlName="email"
+                    [ngClass]="{ 'is-invalid': registerForm.get('email').errors && registerForm.get('email').touched,'is-valid': !registerForm.get('email').errors}">
+                </div>
+
+                <div *ngIf="registerForm.get('email').touched" class="invalid-feedback" style="display: block">
+                  <p *ngIf="registerForm.get('email').hasError('required')" style="display: block">
+                    Email is required
+                  </p>
+                  <p *ngIf="registerForm.get('email').hasError('email')" style="display: block">
+                    invalid email
+                  </p>
+                </div>
+              </div>
+
+
+              <!-- password -->
+              <div class="form-group mb-2">
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-key"></i></span>
+                  </div>
+                  <input type="password" class="form-control" name="password" aria-describedby="passwordHelpId"
+                    placeholder="Password" formControlName="password" [ngClass]="{
+                  'is-invalid':
+                    registerForm.get('password').errors &&
+                    registerForm.get('password').touched,
+                  'is-valid': !registerForm.get('password').errors
+                }" />
+                </div>
+
+                <div *ngIf="registerForm.get('password').touched" class="invalid-feedback" style="display: block">
+                  <p *ngIf="registerForm.get('password').hasError('required')" style="display: block">
+                    Password is requierd
+                  </p>
+                  <p *ngIf="registerForm.get('password').hasError('minlength')" style="display: block">
+                    Password must be at least 8 characters
+                  </p>
+                  <p *ngIf="registerForm.get('password').hasError('maxlength')" style="display: block">
+                    Password must be at least 5 characters long
+                  </p>
+                  <p *ngIf="registerForm.get('password').hasError('pattern')" style="display: block">
+                    Your password must contain at least one uppercase, one lowercase, and one number
+                  </p>
+                </div>
+              </div>
+
+              <!-- confirm password -->
+              <div class="form-group mb-2">
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-unlock-alt"></i></span>
+                  </div>
+                  <input type="password" class="form-control" name="confirmPassword"
+                    aria-describedby="confirmPasswordHelpId" placeholder="Confirm Password"
+                    formControlName="confirmPassword" [ngClass]="{
+                  'is-invalid':
+                    (registerForm.get('confirmPassword').errors &&
+                      registerForm.get('confirmPassword').touched) ||
+                    (registerForm.get('confirmPassword').touched &&
+                      registerForm.hasError('mismatch')),
+                  'is-valid':
+                    !registerForm.get('confirmPassword').errors &&
+                    !registerForm.hasError('mismatch')
+                }" />
+                </div>
+
+                <div *ngIf="registerForm.get('confirmPassword').touched" class="invalid-feedback"
+                  style="display: block">
+                  <p *ngIf="registerForm.hasError('mismatch')" style="display: block">
+                    Confirm Password must match Password
+                  </p>
+                  <p *ngIf="registerForm.get('confirmPassword').hasError('required')" style="display: block">
+                    Confirm Password is required
+                  </p>
+                </div>
+
+              </div>
+              <div class="form-group text-center">
+                <input (click)="register()" class="btn btn-primary btn m-1" type="submit" value="Create account"
+                  [disabled]="!registerForm.valid" />
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="row mt-3">
+        <div class="col-6 text-left">
+
+        </div>
+        <div class=" col-6 text-right">
+          <a [routerLink]="['/auth/login']" class="text-dark"><small>Sign in with existing account</small></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
